@@ -1,4 +1,6 @@
+import pprint
 import typer
+from ai_review.scanner import scan_repo
 
 app = typer.Typer(help="AI Review Tool CLI")
 
@@ -9,7 +11,9 @@ def review(path: str = "."):
     Run code review on the specified folder (default=current folder)
     """
     typer.echo(f"🔍 Running AI Review on: {path}")
-    # Placeholder: later we'll call scanner & analyzer here
+    files = scan_repo(".")
+    print(f"Scanned {len(files)} files")
+    pprint.pprint(files)
 
 # --- Sub-command 2: Setup ---
 @app.command()
