@@ -1,29 +1,25 @@
-import pprint
 import typer
 from ai_review.scanner import scan_repo
+from ai_review.engines.llm_engine import OllamaLLMEngine
+from ai_review.engines.formatter import format_issues
 
-app = typer.Typer(help="AI Review Tool CLI")
+app = typer.Typer()
 
-# --- Sub-command 1: Review ---
+
 @app.command()
 def review(path: str = "."):
-    """
-    Run code review on the specified folder (default=current folder)
-    """
-    typer.echo(f"🔍 Running AI Review on: {path}")
-    files = scan_repo(".")
-    print(f"Scanned {len(files)} files")
-    pprint.pprint(files)
+    typer.echo(f"Reviewing project: {path}")
 
-# --- Sub-command 2: Setup ---
-@app.command()
-def setup():
-    """
-    Setup configuration for AI Review Tool
-    """
-    typer.echo("⚙️ Running setup...")
-    # Placeholder for future setup logic
+    engine = OllamaLLMEngine()
 
-# CLI entry
-if __name__ == "__main__":
-    app()
+    project_data = scan_repo(path)
+
+    try:
+        result = engine.review_project(project_data)
+        issues = result.get("issues", [])
+
+        output = format_issues(issues)
+        typer.echo(output)
+
+    except Exception as e:
+        typer.echo(f"❌ Review failed: {e}")
