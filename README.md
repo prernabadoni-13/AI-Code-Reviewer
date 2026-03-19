@@ -27,6 +27,9 @@ ai-review review
 # Review a specific PR
 ai-review pr <link>
 
+# Review a specific path
+ai-review review <path>
+
 ```
 
 ---
