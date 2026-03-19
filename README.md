@@ -24,11 +24,9 @@ pip install -e .
 # Review current directory
 ai-review review
 
-# Review a specific path
-ai-review review /path/to/project
+# Review a specific PR
+ai-review pr <link>
 
-# Use a different model
-ai-review review --model codellama
 ```
 
 ---
