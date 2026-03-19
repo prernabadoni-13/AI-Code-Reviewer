@@ -1,6 +1,6 @@
 # AI Code Reviewer
 
-A CLI tool that reviews your code locally using Ollama — no API keys, no internet required.
+A CLI tool that reviews your code locally using Ollama.
 
 ## Prerequisites
 
