@@ -1,5 +1,6 @@
 import os
 import subprocess
+from typing import Optional
 
 # Maximum file size (optional safety)
 MAX_FILE_SIZE = 150_000  # in bytes
@@ -24,7 +25,7 @@ def git_ls_files(path: str) -> list[str]:
     files = result.strip().split("\n")
     return [f for f in files if f]  # remove empty strings
 
-def read_file_content(file_path: str) -> str | None:
+def read_file_content(file_path: str) -> Optional[str]:
     """Read a file and return its content or None on failure."""
     try:
         if os.path.getsize(file_path) > MAX_FILE_SIZE:

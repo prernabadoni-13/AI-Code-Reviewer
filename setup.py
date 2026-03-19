@@ -11,6 +11,7 @@ setup(
     },
     install_requires=[
         "typer[all]",
-        "rich"
+        "rich",
+        "requests"
     ]
 )
