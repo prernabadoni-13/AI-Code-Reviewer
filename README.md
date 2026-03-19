@@ -24,12 +24,20 @@ pip install -e .
 # Review current directory
 ai-review review
 
-# Review a specific PR
-ai-review pr <link>
-
 # Review a specific path
-ai-review review <path>
+ai-review review /path/to/project
 
+# Review using a specific model
+ai-review review --model llama3.2
+
+# Review a GitHub PR and post inline comments
+ai-review pr https://github.com/owner/repo/pull/1
+
+# Check setup and dependencies
+ai-review setup
+
+# See all commands
+ai-review --help
 ```
 
 ---
@@ -48,6 +56,36 @@ ai-review review <path>
 | `phi3:mini` | ~2GB | Default, fast, lightweight |
 | `codellama` | ~4GB | Better code understanding |
 | `llama3` | ~5GB | Most capable |
+
+---
+
+## GitHub PR Integration
+
+> A GitHub Personal Access Token is required for PR reviews.
+
+### How to get a token:
+1. Go to https://github.com/settings/tokens
+2. Click **"Generate new token (classic)"**
+3. Give it a name e.g. `ai-code-reviewer`
+4. Tick the **`repo`** scope
+5. Click **"Generate token"** and copy it
+
+### Set the token:
+```bash
+# Mac/Linux (add to ~/.zshrc to make it permanent)
+export GITHUB_TOKEN=your_token_here
+
+# Windows
+set GITHUB_TOKEN=your_token_here
+```
+
+### Then run:
+```bash
+ai-review pr https://github.com/owner/repo/pull/1
+```
+The tool will post inline comments on each issue directly on the PR! 
+
+> The `ai-review review` command does NOT need a GitHub token — it works fully offline.
 
 ---
 
