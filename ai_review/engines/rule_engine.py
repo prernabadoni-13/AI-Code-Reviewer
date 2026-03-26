@@ -44,25 +44,11 @@ class RuleBasedEngine(ReviewEngine):
                     issues.append({"file": path, "line": i, "severity": "info",
                         "message": "Remove print statement before production"})
 
-                # bare except
-                if stripped in ("except:", "except Exception:"):
-                    issues.append({"file": path, "line": i, "severity": "warning",
-                        "message": "Bare except block — handle specific exceptions"})
-
-                # mutable default argument
-                if "def " in line and ("=[]" in line or "={}" in line or "=[]" in line):
-                    issues.append({"file": path, "line": i, "severity": "warning",
-                        "message": "Mutable default argument — use None instead"})
 
                 # == None instead of is None
                 if "== None" in line:
                     issues.append({"file": path, "line": i, "severity": "warning",
                         "message": "Use 'is None' instead of '== None'"})
-
-                # missing function docstring (def with no docstring on next line)
-                if stripped.startswith("def ") and not stripped.endswith(":"):
-                    issues.append({"file": path, "line": i, "severity": "info",
-                        "message": "Function definition may be missing colon"})
 
             # ── Java specific rules ───────────────────────────────────
             if ext == "java":
@@ -76,12 +62,6 @@ class RuleBasedEngine(ReviewEngine):
                 if "catch" in line and "{}" in line:
                     issues.append({"file": path, "line": i, "severity": "warning",
                         "message": "Empty catch block — handle the exception properly"})
-
-                # raw types (List, Map, Set without generics)
-                if any(t in line for t in ["List ", "Map ", "Set ", "ArrayList "]):
-                    if "<" not in line and "import" not in line:
-                        issues.append({"file": path, "line": i, "severity": "warning",
-                            "message": "Raw type used — specify generic type e.g. List<String>"})
 
                 # missing semicolon (basic check)
                 if stripped and not stripped.startswith("//") and not stripped.endswith(("{", "}", ";")):
